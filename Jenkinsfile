@@ -54,10 +54,10 @@ pipeline {
             cleanWs()
         }
 
-        failure {
-            mail to: 'qa-team@example.com',
-                 subject: "❌ Jenkins Test Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: "Check Jenkins for more details: ${env.BUILD_URL}"
-        }
+//         failure {
+//             mail to: 'qa-team@example.com',
+//                  subject: "❌ Jenkins Test Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+//                  body: "Check Jenkins for more details: ${env.BUILD_URL}"
+//         }
     }
 }

@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/your-org/orangehrm-selenide.git', branch: 'main'
+                git url: 'https://github.com/HarshalThitame/OrangeHRM-Selenide.git', branch: 'master'
             }
         }
 

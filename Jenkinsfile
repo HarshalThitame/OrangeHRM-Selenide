@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         MAVEN_OPTS = "-Dmaven.repo.local=.m2/repository"
-        ENV = "dev"
+        ENV = "qa"
     }
 
     parameters {

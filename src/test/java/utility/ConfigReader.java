@@ -7,11 +7,11 @@ import java.util.Properties;
 public class ConfigReader {
 
     private static final Properties properties = new Properties();
-    private static final String CONFIG_PATH = "src/test/resources/config.properties";
     private static boolean isLoaded = false;
-
     // Load only once
-    public static void loadProperties() {
+
+    public static void loadProperties(String env) {
+        String CONFIG_PATH = "src/test/resources/config/" + env + ".properties";
         if (!isLoaded) {
             try (FileInputStream fis = new FileInputStream(CONFIG_PATH)) {
                 properties.load(fis);
@@ -24,9 +24,6 @@ public class ConfigReader {
 
     // Access any property by key
     public static String getProperty(String key) {
-        if (!isLoaded) {
-            loadProperties();  // auto-load if not loaded
-        }
         return properties.getProperty(key);
     }
 }

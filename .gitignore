@@ -36,3 +36,31 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Allure results and reports
+allure-results/
+allure-report/
+
+# Selenium Grid artifacts
+video/
+tmp/
+videos/
+logs/
+
+# Docker
+*.pid
+*.log
+docker-compose.override.yml
+
+# Test Output
+test-output/
+
+# Environment files
+*.env
+*.properties~
+
+# Misc
+*.swp
+*.swo
+*.bak
+

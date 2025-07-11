@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.DashboardPage;
 import pageObjects.LoginPage;
+import utility.RetryAnalyzer;
 
 import static com.codeborne.selenide.Selenide.open;
 import static utility.ConfigReader.getProperty;
@@ -18,7 +19,8 @@ public class LoginTest extends BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
 
-    @Test(description = "User should be able to log in with valid credentials")
+
+    @Test(description = "User should be able to log in with valid credentials", retryAnalyzer = RetryAnalyzer.class)
     @Severity(SeverityLevel.CRITICAL)
     @Story("Login with valid credentials")
     @Owner("Harshal Thitame")

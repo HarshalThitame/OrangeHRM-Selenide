@@ -13,9 +13,10 @@ public class BaseTest {
 
     @BeforeClass
     public void setUp() {
-
+        String env = System.getProperty("env", "dev");
+        ConfigReader.loadProperties(env);
         Configuration.browser = get("browser");
-//        Configuration.remote = "http://localhost:4444/wd/hub";
+        Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.headless = Boolean.parseBoolean(get("headless"));
         Configuration.browserSize = get("browser.size");
         Configuration.timeout = Long.parseLong(get("timeout"));

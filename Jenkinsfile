@@ -43,7 +43,7 @@ pipeline {
 
         stage('Archive Reports') {
             steps {
-                archiveArtifacts artifacts: 'target\\allure-report\\**', fingerprint: true
+                archiveArtifacts artifacts: 'allure-report/**', fingerprint: true
             }
         }
     }

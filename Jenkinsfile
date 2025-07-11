@@ -15,49 +15,54 @@ pipeline {
         jdk 'JDK_17'
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git url: 'https://github.com/HarshalThitame/OrangeHRM-Selenide.git', branch: 'master'
-            }
+   stages {
+      stage('Checkout') {
+        steps {
+          git 'https://github.com/HarshalThitame/OrangeHrmAllure.git'
         }
+      }
 
-        stage('Build and Compile') {
-            steps {
-                bat 'mvn clean compile -Denv=%ENV%'
-            }
+      stage('Start Selenium Grid via Docker') {
+        steps {
+          bat 'docker-compose -f selenium-grid-docker\\docker-compose.yml up -d'
         }
+      }
 
-        stage('Execute Tests') {
-            steps {
-                bat 'mvn test -Denv=%ENV%'
-            }
+      stage('Build Project') {
+        steps {
+          bat 'mvn clean compile'
         }
+      }
 
-        stage('Generate Allure Report') {
-            steps {
-                bat 'mvn allure:report'
-                allure includeProperties: false, jdk: '', reportBuildPolicy: 'ALWAYS', results: [[path: 'target\\allure-results']]
-            }
+      stage('Run Tests') {
+        steps {
+          bat 'mvn test -Dbrowser=chrome -Denv=%ENV%'
         }
+      }
 
-        stage('Archive Reports') {
-            steps {
-                archiveArtifacts artifacts: 'target\\allure-report\\**', fingerprint: true
-            }
+      stage('Generate Allure Report') {
+        steps {
+          bat 'allure generate target\\allure-results --clean -o allure-report'
         }
+      }
+
+      stage('Publish Allure Report') {
+        steps {
+          allure includeProperties: false, jdk: '', commandline: 'Allure', results: [[path: 'target/allure-results']]
+        }
+      }
     }
 
     post {
-        always {
-            junit 'target\\surefire-reports\\*.xml'
-            cleanWs()
-        }
-
-//         failure {
-//             mail to: 'qa-team@example.com',
-//                  subject: "❌ Jenkins Test Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-//                  body: "Check Jenkins for more details: ${env.BUILD_URL}"
-//         }
+      always {
+        echo "Cleaning up containers..."
+        bat 'docker-compose -f selenium-grid-docker\\docker-compose.yml down'
+      }
+      success {
+        echo "Build and tests successful!"
+      }
+      failure {
+        echo "Build failed!"
+      }
     }
-}
+  }

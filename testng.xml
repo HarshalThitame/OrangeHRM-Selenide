@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="OrangeHrm Automation test">
+    <test name="Login test">
+        <classes>
+            <class name="testCases.LoginTest"/>
+        </classes>
+    </test>
+</suite>
